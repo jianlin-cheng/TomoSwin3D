@@ -1,0 +1,177 @@
+#!/usr/bin/env python3
+"""
+Grid Generator
+
+Author: Ashwin Dhakal
+Date: June 01, 2025
+
+This tool creates grids from MRC density maps and saves each grid with its indices.
+"""
+
+import argparse
+import os
+from glob import glob
+import numpy as np
+import mrcfile
+
+
+def create_and_save_grids(mrc_file, output_dir, grid_size=48, padding=8):
+    """
+    Create grids from normalized density map and save each grid with its indices
+    
+    Args:
+        mrc_file: Path to input MRC file
+        output_dir: Directory to save grids
+        grid_size: Size of processing grid (default 48)
+        padding: Size of padding (default 8)
+    """
+    # Create output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Read MRC file
+    with mrcfile.open(mrc_file) as mrc:
+        density_map = mrc.data
+        voxel_size = mrc.voxel_size
+        origin = mrc.header.origin
+        mapc = mrc.header.mapc
+        mapr = mrc.header.mapr
+        maps = mrc.header.maps
+
+    # Get original shape
+    orig_shape = density_map.shape
+    
+    # Calculate padding needed
+    window_size = grid_size + 2*padding  # 48 + 2*8 = 64
+    pad_end_x = window_size - (orig_shape[0] % grid_size)
+    pad_end_y = window_size - (orig_shape[1] % grid_size)
+    pad_end_z = window_size - (orig_shape[2] % grid_size)
+    
+    # Pad the density map
+    padded_map = np.pad(density_map,
+                        [(padding, pad_end_x), 
+                         (padding, pad_end_y),
+                         (padding, pad_end_z)],
+                        'constant')
+    
+    
+    # Create and save grids
+    grid_count = 0
+    for i in range(0, orig_shape[0], grid_size):
+        for j in range(0, orig_shape[1], grid_size):
+            for k in range(0, orig_shape[2], grid_size):
+                # Get grid dimensions
+                di = min(grid_size, orig_shape[0]-i)
+                dj = min(grid_size, orig_shape[1]-j)
+                dk = min(grid_size, orig_shape[2]-k)
+                
+                # Extract grid with padding
+                grid = padded_map[i:i+window_size,
+                                j:j+window_size,
+                                k:k+window_size]
+                
+                # Only save complete grids
+                if grid.shape == (window_size, window_size, window_size):
+                    # Create filename with indices
+                    filename = f"grid_i{i}_j{j}_k{k}.npz"
+                    filepath = os.path.join(output_dir, filename)
+                    
+                    # if grid.max() >= 0:
+
+                        # Only save complete grids
+                    if grid.shape == (window_size, window_size, window_size):
+                        # Create filename with indices
+                        filename = f"grid_i{i}_j{j}_k{k}.npz"
+                        filepath = os.path.join(output_dir, filename)
+
+                        # Save grid with its metadata
+                        np.savez(filepath,
+                                grid=grid,
+                                i=i, j=j, k=k,
+                                di=di, dj=dj, dk=dk,
+                                orig_shape=orig_shape,
+                                grid_size=grid_size,
+                                padding=padding,
+                                voxel_size=voxel_size,
+                                origin=origin,
+                                mapc=mapc,
+                                mapr=mapr,
+                                maps=maps)
+
+                        grid_count += 1   
+    return grid_count
+
+
+def main():
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    default_base_dir = os.path.join(repo_root, "sample_input_data", "tomogram_collection")
+    default_output_dir = os.path.join(
+        repo_root,
+        "sample_input_data",
+        "test_data",
+        "Grids_64_normalized",
+        "tomograms_feature_maps_sobel_gradmag",
+    )
+
+    parser = argparse.ArgumentParser(
+        description="Create grids from MRC density maps",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+        Author: Ashwin Dhakal
+        Date: June 01, 2025
+
+        This tool creates grids from MRC density maps with the following features:
+        - Splits large density maps into manageable grid chunks
+        - Adds padding around each grid for context
+        - Filters grids based on maximum density threshold
+        - Saves grids with complete metadata for reconstruction
+
+        Grid Processing:
+        - Default grid size: 48x48x48 voxels
+        - Default padding: 8 voxels on each side
+        - Total window size: 64x64x64 voxels (48 + 2*8)
+        - Minimum density threshold: 0.01
+
+        Output:
+        - Each grid saved as NPZ file with indices and metadata
+        - Filename format: grid_i{x}_j{y}_k{z}.npz
+
+        Example usage:
+        %(prog)s
+        %(prog)s --base-dir /path/to/processed/data --output-dir /path/to/grids
+        %(prog)s --grid-size 64 --padding 16
+                """
+    )
+    #dont forget to change the threshold value
+    parser.add_argument("--base-dir", 
+                       default=default_base_dir,
+                       help="Base directory containing processed MRC files")
+    parser.add_argument("--output-dir", 
+                       default=default_output_dir, 
+                       help="Output directory for grid files") #change either tomograms or class_mask
+    parser.add_argument("--grid-size", type=int, default=48,
+                       help="Size of processing grid (default: 48)")
+    parser.add_argument("--padding", type=int, default=8,
+                       help="Size of padding around each grid (default: 8)")
+    
+    args = parser.parse_args()
+    
+    BASE_DIR = sorted(glob(f"{args.base_dir}/*"))
+    OUTPUT_DIR = args.output_dir
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    for i, directory in enumerate(BASE_DIR):
+        emd_id = directory.split('/')[-1]
+        normalized_map = f"{directory}/tomogram_feature_maps/tomogram_filter_sobel_gradmag.mrc" #change this to class_mask_standardized_across_all_dataset.mrc
+        output_directory = f"{OUTPUT_DIR}/{emd_id}"
+        os.makedirs(output_directory, exist_ok=True)
+        
+        try:
+            grid_count = create_and_save_grids(normalized_map, output_directory, 
+                                            args.grid_size, args.padding)
+            print(f"Created {grid_count} number of normalized tomogram grids for Data ID: {emd_id} | Completed {i + 1} tomograms")
+        except Exception as e:
+            print(f"Normalized tomogram grid creation failed for Data ID: {emd_id} - Error: {str(e)}")
+
+
+if __name__ == "__main__":
+    main()
