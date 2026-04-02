@@ -1,5 +1,5 @@
 # Configuration file
-## Author: Ashwin Dhakal
+## Author: Ashwin Dhakal [TomoSwin3D]
 
 import argparse
 import torch
