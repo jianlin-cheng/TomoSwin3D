@@ -1,0 +1,20 @@
+There are various TomoSwin3D pretrained models that you can use to best macromolecule detection/classification result.
+
+Pretrained Model1:
+Name:
+When to Use: If you only need the centroid location of the macromomolecules without needing the classification. This model is trained on 9 tomograms from SHREC 2021, 9 tomograms from SHREC 2020, 24 tomograms from CryoETPortal dataset, and 84 tomograms from the Serpico dataset. All the particles are labelled as 1 and the background was labelled as 0 while preparing training dataset.
+
+
+Pretrainied Model 2:
+Name: 
+When to use: If you need the centroid of the macromolecucles as well as the protein classification. This model can classify 129 different protein IDs. When to use: If you are This model is trained on 9 tomograms from SHREC 2021, 9 tomograms from SHREC 2020, 24 tomograms from CryoETPortal dataset, and 84 tomograms from the Serpico dataset. More information on the mapping is available here: 
+
+
+Pretrained Model 3:
+Name: 
+When to use: For making predictions on SHREC data. Finetunned for SHREC classes.
+
+
+Pretrained Model 4:
+Name: 
+When to use: For making predictions on CryoETPortal data. Finetunned for CryoETportal classes.
