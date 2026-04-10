@@ -4,5 +4,5 @@ __pycache__/
 
 # Generated / local data (do not commit)
 output/
-sample_input_data/
+sample_input_data/tomogram_collection/*
 pretrained_models/
