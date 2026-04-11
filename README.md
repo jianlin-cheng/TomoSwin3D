@@ -70,6 +70,15 @@ conda activate TomoSwin3D
 python prepare_test_data.py
 ```
 
+```
+Optional Arguments:
+    --default-voxel-size", type=float, default=1, help="Fallback voxel size (angstrom) for unknown dataset folder names in step 1.
+
+Example usage: 
+    python prepare_test_data.py --default-voxel-size 10.0
+```
+
+
 Optional flags include `--input-path`, `--grid-size` (default 48), `--padding` (default 8), and top-hat options; see `python prepare_test_data.py --help`.
 
 
@@ -81,7 +90,6 @@ python predict.py
 ```
 
 This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under a timestamped folder in `output/results/`.
-Outputs are written under `output/results/DATETIME_<timestamp>/<data_id>/`, including predicted grids and the reconstructed MRC.
 
 ### Post-processing: generate centroids coordinates
 
