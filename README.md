@@ -21,9 +21,8 @@ git clone https://github.com/jianlin-cheng/TomoSwin3D.git
 cd TomoSwin3D/
 ```
 
-### Download trained models
+### Download model weights
 
-Weights are hosted on Zenodo ([record 19500440](https://zenodo.org/records/19500440)).
 
 ```bash
 curl -L "https://zenodo.org/records/19500440/files/pretrained_models.zip?download=1" -o pretrained_models.zip
@@ -31,7 +30,7 @@ unzip pretrained_models.zip
 rm pretrained_models.zip
 ```
 
-Unpack so this repository contains a top-level `pretrained_models/` directory (for example `pretrained_models/TomoSwin3D_model_1.pth`). Several checkpoints are included; see `miscellaneous/which_model_to_use.txt` for which file to use (SHREC multiclass, binary centroid detection, CryoET Portal, unified multiclass, etc.).
+`pretrained_models/` directory contains several checkpoints; see `miscellaneous/which_model_to_use.txt` for for more details.
 
 ### Download sample input test data
 
@@ -41,8 +40,6 @@ unzip sample_input_data.zip
 rm sample_input_data.zip
 ```
 
-Unpack so you have `sample_input_data/` at the repository root, matching the paths expected by `predict.py` (grid NPZs under `sample_input_data/test_data/...` and reference tomograms under `sample_input_data/tomogram_collection/...`).
-
 ### Create conda environment
 
 ```bash
@@ -50,6 +47,30 @@ conda remove --name TomoSwin3D --all
 conda env create -f environment.yml
 conda activate TomoSwin3D
 ```
+
+## Prepare test data for inference
+
+`prepare_test_data.py` runs the full preprocessing pipeline from `utils/preparing_tomograms_for_prediction/` in order: **(1)** normalize each tomogram MRC; **(2a–c)** build 3D feature volumes—DoG blob response, Sobel gradient magnitude, and morphological top-hat; **(3)** split the normalized density into overlapping grid NPZs; **(4a–c)** split each feature map type into matching grid NPZs. Together these produce the multi-channel inputs the network expects. Default input is `sample_input_data/tomogram_collection` (one subfolder per tomogram ID, each containing `reconstruction.mrc`).
+
+```bash
+python prepare_test_data.py
+```
+
+Optional flags include `--input-path`, `--grid-size` (default 48), `--padding` (default 8), and top-hat options; see `python prepare_test_data.py --help`.
+
+**After a successful run** (paths are relative to the repo root; `<id>` is each tomogram folder name):
+
+| Location | Contents |
+|----------|----------|
+| `sample_input_data/tomogram_collection/<id>/` | `reconstruction_normalized_map.mrc` and `tomogram_feature_maps/` with derived MRC feature maps (DoG, Sobel, top-hat, etc.) |
+| `sample_input_data/test_data/Grids_64_normalized/tomograms/<id>/` | `grid_i*_j*_k*.npz` for normalized density (64 = grid + padding window size) |
+| `sample_input_data/test_data/Grids_64_normalized/tomograms_feature_maps_sobel_gradmag/<id>/` | NPZ grids for Sobel features |
+| `sample_input_data/test_data/Grids_64_normalized/tomograms_feature_maps_tophat_combined/<id>/` | NPZ grids for top-hat features |
+| `sample_input_data/test_data/Grids_64_normalized/tomograms_feature_maps_DoG_blob/<id>/` | NPZ grids for DoG blob features |
+
+Inference in `predict.py` reads the grid stacks under `.../Grids_64_normalized/tomograms/<id>/` together with the original `reconstruction.mrc` paths under `sample_input_data/tomogram_collection/<id>/`.
+
+
 
 ## Prediction on Test data
 
@@ -75,10 +96,10 @@ Outputs are written under `output/results/DATETIME_<timestamp>/<data_id>/`, incl
 To turn a predicted MRC into connected components and centroid coordinates, use:
 
 ```bash
-python get_coordinates_and_postprocessed_volume.py --help
+python get_coordinates_and_postprocessed_volume.py --directory "output/results/DATETIME_2026-03-24_11:18:36"
 ```
 
-See the script’s arguments for input MRC path or directory, minimum blob size, connectivity, and output CSV location.
+Use --directory (or -d) with the path to the timestamped folder that predict.py created.
 
 ## Rights and permissions
 
