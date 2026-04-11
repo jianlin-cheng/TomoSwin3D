@@ -122,7 +122,7 @@ Example usage:
 
 This generated post-processed macromolecule annotation volume and particle centroid (XYZ) coordinates .
 
-### INPUT OUT Expectation
+### Input Output OUT Expectation
 
 https://github.com/user-attachments/assets/31db858a-8595-4887-90f0-2c1657d66b44
 
