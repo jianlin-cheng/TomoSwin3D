@@ -50,45 +50,20 @@ conda activate TomoSwin3D
 
 ## Prepare test data for inference
 
-Run the full pipeline with `prepare_test_data.py` (default input: `sample_input_data/tomogram_collection`, one subfolder per tomogram with `reconstruction.mrc`).
+`prepare_test_data.py` runs the preprocessing pipeline end-to-end. Default input root is `sample_input_data/tomogram_collection` (one folder per tomogram with `reconstruction.mrc`).
 
-### Processing pipeline steps
+### Pipeline steps
 
-**Step 1: Tomogram Normalization**
+1. **Tomogram normalization** — Scale intensities for consistent processing.
 
-**Purpose:** Normalize raw tomogram intensity values for consistent processing.
+2. **Feature maps**
+   - **2a DoG** — Blob-like structures across scales.
+   - **2b Sobel** — Edges and boundaries.
+   - **2c Top-hat** — Local contrast; reduced broad background.
 
-**Step 2: Feature Map Generation**
+3. **Split density volume** — Tile each normalized tomogram into overlapping 3D grids.
 
-**Step 2a: DoG Blob Features**
-
-**Purpose:** Highlight blob-like particle structures across multiple scales.
-
-**Step 2b: Sobel Gradient Features**
-
-**Purpose:** Extract edge and boundary information.
-
-**Step 2c: Top-hat Features**
-
-**Purpose:** Enhance local contrast and remove background trends.
-
-**Step 3: Tomogram Splitting (Base Volume)**
-
-**Purpose:** Divide normalized tomograms into smaller 3D sub-volumes (grids).
-
-**Step 4: Feature-Based Grid Splitting**
-
-**Step 4a: Sobel Feature Grids**
-
-**Purpose:** Split Sobel gradient feature maps into grids.
-
-**Step 4b: Top-hat Feature Grids**
-
-**Purpose:** Split top-hat feature maps into grids.
-
-**Step 4c: DoG Feature Grids**
-
-**Purpose:** Split DoG blob feature maps into grids.
+4. **Split feature volumes** — Tile each feature map to align with the density grids (**4a** Sobel, **4b** top-hat, **4c** DoG).
 
 ```bash
 python prepare_test_data.py
