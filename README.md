@@ -75,31 +75,22 @@ Optional flags include `--input-path`, `--grid-size` (default 48), `--padding` (
 
 ## Prediction on Test data
 
-`predict.py` runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under a timestamped folder in `output/results/`.
 
 ```bash
 python predict.py
 ```
 
-### Configuring a run
-
-`predict.py` is driven by variables at the top of the script (not the command line). Adjust as needed:
-
-- **`data_ids`**: list of tomogram IDs under `sample_input_data/test_data/Grids_64_normalized/tomograms/<id>/`.
-- **`model_checkpoint`**: path to a `.pth` file under `pretrained_models/` (default: `pretrained_models/TomoSwin3D_model_1.pth`).
-- **`threshold`**: confidence threshold for multiclass or binary masks (typical multiclass: `0.7`; binary: often `0.9` per `miscellaneous/which_model_to_use.txt`).
-- **`comment`**: optional string appended to output MRC filenames.
-
+This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under a timestamped folder in `output/results/`.
 Outputs are written under `output/results/DATETIME_<timestamp>/<data_id>/`, including predicted grids and the reconstructed MRC.
 
-### Post-processing: centroids and CSV
+### Post-processing: generate centroids coordinates
 
-To turn a predicted MRC into connected components and centroid coordinates, use:
 
 ```bash
 python get_coordinates_and_postprocessed_volume.py --directory "output/results/DATETIME_2026-03-24_11:18:36"
 ```
 
+This turns predicted MRC into connected components and extracts centroid coordinates.
 Use --directory (or -d) with the path to the timestamped folder that predict.py created.
 
 ## Rights and permissions
