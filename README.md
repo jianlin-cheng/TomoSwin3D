@@ -14,7 +14,7 @@ These results establish TomoSwin3D as a scalable and accurate solution for high-
 particle picking and downstream subtomogram averaging.
 
 
-## Overview of CryoTransformer Pipeliine
+## Overview of TomoSwin3D Pipeliine
 
 ![Alt text](<miscellaneous/TomoSwin3D_overview.jpg>)
 
