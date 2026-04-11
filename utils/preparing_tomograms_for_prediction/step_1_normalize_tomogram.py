@@ -45,6 +45,8 @@ def execute(inputs, user_default_voxel_size=1):
             # Handle potential NaN or zero values in voxel size
             if 'shrec_' in inputs:
                 default_voxel_size = 1
+            elif 'tomogram' in inputs:
+                default_voxel_size = 1
             elif 'CryoETPortal' in inputs:
                 default_voxel_size = 10
             elif 'MaxPlanck' in inputs:

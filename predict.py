@@ -194,7 +194,7 @@ def save_volume_as_mrc(volume, metadata, output_path):
 #there are new changes to be reflected
 # data_ids = ['shrec_2021_model_9', 'shrec_2021_model_8', 'shrec_2020_model_9', 'MaxPlanck_model_r9_08', 'MaxPlanck_model_r1_08', 'MaxPlanck_model_r11_08', 'MaxPlanck_model_r10_08', 'CryoETPortal_model_26', \
     # 'CryoETPortal_model_25', 'CryoETPortal_model_24']
-data_ids = ['shrec_2021_model_9']  
+data_ids = ['tomogram_ID_1']  
 
 # Model Configuration Parameters
 comment = ''
@@ -212,7 +212,7 @@ def create_detailed_filename(data_id, comment, model_checkpoint):
     return filename
     
 # Load model checkpoint and extract architecture
-model_checkpoint ="pretrained_models/CryoETPick_2026-03-23_12:29:33_HiD32_LR0.001_LCE_B64_D0.5_WS2_L2_6_6_2_He3_6_12_24_HeD32_R1_Sadd_SL32_W1_C1.0_Gr64_Ch4_Mclass_mask_Pmulticlass_standardized_across_shrec_2021_GTnon_zero_grid_Nnormalized_A___C15.pth"
+model_checkpoint ="pretrained_models/TomoSwin3D_model_1.pth"
 checkpoint = torch.load(model_checkpoint, map_location=torch.device('cpu'))
 
 # Extract configuration from checkpoint
