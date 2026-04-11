@@ -97,16 +97,14 @@ python get_coordinates_and_postprocessed_volume.py --directory "output/results/D
 ```
 Optional Arguments:
     --directory', type=str, default='output/results/DATETIME_2026-03-24_11:18:36', help='Input directory containing predicted MRC files (default: %(default)s)'
-    --min-blob-size', type=int, default=40, help='Minimum blob size (number of voxels) to keep (default: 10)'
+    --min-blob-size', type=int, default=20, help='Minimum blob size (number of voxels) to keep'
     --connectivity', type=int, choices=[1, 2, 3], default=2, help='Connectivity for connected components: 1=6-conn, 2=18-conn, 3=26-conn (default: 2)'
-    --output', type=str, help='Output directory (default: same as input)'
-    --tomogram_name', type=str, default=None, help='Specific tomogram to process (if None, process all tomograms in directory)')
 Example usage: 
     python get_coordinates_and_postprocessed_volume.py --directory 'output/results/DATETIME_2026-03-24_11:18:36' --min-blob-size  20
 ```
 
 
-This cleans predicted volume and extracts particle centroid coordinates.
+This cleans predicted volume and generates particle centroid coordinates.
 
 ## Rights and permissions
 
