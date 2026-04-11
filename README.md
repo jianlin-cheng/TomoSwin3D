@@ -72,7 +72,7 @@ python prepare_test_data.py
 
 ```
 Optional Arguments:
-    --default-voxel-size", type=float, default=1, help="Fallback voxel size (angstrom) for unknown dataset folder names in step 1.
+    --default-voxel-size", type=float, default=1, help="Fallback voxel size (angstrom) for unknown dataset folder names in step 1."
 
 Example usage: 
     python prepare_test_data.py --default-voxel-size 10.00
@@ -94,9 +94,19 @@ This runs inference, saves per-grid predictions, reconstructs a 3D volume, and w
 ```bash
 python get_coordinates_and_postprocessed_volume.py --directory "output/results/DATETIME_2026-03-24_11:18:36"
 ```
+```
+Optional Arguments:
+    --directory', type=str, default='output/results/DATETIME_2026-03-24_11:18:36', help='Input directory containing predicted MRC files (default: %(default)s)'
+    --min-blob-size', type=int, default=40, help='Minimum blob size (number of voxels) to keep (default: 10)'
+    --connectivity', type=int, choices=[1, 2, 3], default=2, help='Connectivity for connected components: 1=6-conn, 2=18-conn, 3=26-conn (default: 2)'
+    --output', type=str, help='Output directory (default: same as input)'
+    --tomogram_name', type=str, default=None, help='Specific tomogram to process (if None, process all tomograms in directory)')
+Example usage: 
+    python get_coordinates_and_postprocessed_volume.py --directory 'output/results/DATETIME_2026-03-24_11:18:36' --min-blob-size  20
+```
 
-This turns predicted MRC into connected components and extracts centroid coordinates.
-Use --directory (or -d) with the path to the timestamped folder that predict.py created.
+
+This cleans predicted volume and extracts particle centroid coordinates.
 
 ## Rights and permissions
 
