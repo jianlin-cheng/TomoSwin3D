@@ -13,6 +13,13 @@ other particles, outperforming existing methods, with a pronounced advantage in 
 These results establish TomoSwin3D as a scalable and accurate solution for high-throughput cryo-ET macromolecule
 particle picking and downstream subtomogram averaging.
 
+
+## Overview of CryoTransformer Pipeliine
+
+![Alt text](<miscellaneous/TomoSwin3D_overview.jpg>)
+
+
+
 ## Setup
 
 #### Clone project
