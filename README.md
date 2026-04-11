@@ -93,26 +93,36 @@ Example usage:
 python predict.py
 ```
 
-This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under a timestamped folder in `output/results/`. Use your preferred model and provide `data_ids` you would like to run the inference on.
+```
+Optional Arguments:
+    --model_checkpoint", type=str, default="pretrained_models/TomoSwin3D_model_1.pth", help="Path to the trained model checkpoint (.pth file).",
+
+Example usage: 
+     python predict.py --model_checkpoint "pretrained_models/TomoSwin3D_model_2.pth"
+```
+
+
+This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under in `output/results/TomoSwin3D_results/`. Provide `data_ids` you would like to run the inference on.
 
 ### Post-processing: generate centroids coordinates
 
 
 ```bash
-python get_coordinates_and_postprocessed_volume.py --directory "output/results/DATETIME_2026-03-24_11:18:36"
+python get_coordinates_and_postprocessed_volume.py --directory "output/results/TomoSwin3D_results"
 ```
 ```
 Optional Arguments:
-    --directory', type=str, default='output/results/DATETIME_2026-03-24_11:18:36', help='Input directory containing predicted MRC files'
+    --directory', type=str, default='output/results/TomoSwin3D_results', help='Input directory containing predicted MRC files'
     --min-blob-size', type=int, default=20, help='Minimum blob size (number of voxels) to keep'
     --connectivity', type=int, choices=[1, 2, 3], default=2, help='Connectivity for connected components: 1=6-conn, 2=18-conn, 3=26-conn (default: 2)'
 Example usage: 
-    python get_coordinates_and_postprocessed_volume.py --directory 'output/results/DATETIME_2026-03-24_11:18:36' --min-blob-size  20
+    python get_coordinates_and_postprocessed_volume.py --directory 'output/results/TomoSwin3D_results' --min-blob-size  20
 ```
 
 
-This cleans predicted volume and generates particle centroid coordinates.
+This generated post-processed macromolecule annotation volume and particle centroid (XYZ) coordinates .
 
+### INPUT OUT Expectation
 
 
 

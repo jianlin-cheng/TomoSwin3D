@@ -283,7 +283,9 @@ model.eval()
 # Create main timestamped output directory
 current_datetime = datetime.now()
 timestamp = current_datetime.strftime("%Y-%m-%d_%H:%M:%S")
-main_output_path = f"output/results/DATETIME_{timestamp}"
+#main_output_path = f"output/results/DATETIME_{timestamp}"
+main_output_path = f"output/results/TomoSwin3D_results"
+
 os.makedirs(main_output_path, exist_ok=True)
 
 # Process each data ID
