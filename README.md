@@ -79,9 +79,6 @@ Example usage:
 ```
 
 
-Optional flags include `--input-path`, `--grid-size` (default 48), `--padding` (default 8), and top-hat options; see `python prepare_test_data.py --help`.
-
-
 ## Prediction on Test data
 
 
@@ -89,7 +86,7 @@ Optional flags include `--input-path`, `--grid-size` (default 48), `--padding` (
 python predict.py
 ```
 
-This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under a timestamped folder in `output/results/`.
+This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under a timestamped folder in `output/results/`. Use your preferred model and provide `data_ids` you would like to run the inference on.
 
 ### Post-processing: generate centroids coordinates
 
