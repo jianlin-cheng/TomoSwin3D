@@ -58,17 +58,12 @@ python prepare_test_data.py
 
 Optional flags include `--input-path`, `--grid-size` (default 48), `--padding` (default 8), and top-hat options; see `python prepare_test_data.py --help`.
 
-**After a successful run** (paths are relative to the repo root; `<id>` is each tomogram folder name):
+**Outputs** (under `sample_input_data/`; `<id>` = tomogram folder name):
 
-| Location | Contents |
-|----------|----------|
-| `sample_input_data/tomogram_collection/<id>/` | `reconstruction_normalized_map.mrc` and `tomogram_feature_maps/` with derived MRC feature maps (DoG, Sobel, top-hat, etc.) |
-| `sample_input_data/test_data/Grids_64_normalized/tomograms/<id>/` | `grid_i*_j*_k*.npz` for normalized density (64 = grid + padding window size) |
-| `sample_input_data/test_data/Grids_64_normalized/tomograms_feature_maps_sobel_gradmag/<id>/` | NPZ grids for Sobel features |
-| `sample_input_data/test_data/Grids_64_normalized/tomograms_feature_maps_tophat_combined/<id>/` | NPZ grids for top-hat features |
-| `sample_input_data/test_data/Grids_64_normalized/tomograms_feature_maps_DoG_blob/<id>/` | NPZ grids for DoG blob features |
+- **`tomogram_collection/<id>/`** — Normalized MRC and `tomogram_feature_maps/` (DoG, Sobel, top-hat).
+- **`test_data/Grids_64_normalized/`** — Per `<id>`, density NPZs in `tomograms/<id>/`; feature NPZs in `tomograms_feature_maps_sobel_gradmag/`, `tomograms_feature_maps_tophat_combined/`, and `tomograms_feature_maps_DoG_blob/`. Files: `grid_i*_j*_k*.npz`. `Grids_64_` matches the padded window size (default 48³ voxels + 8 padding per side).
 
-Inference in `predict.py` reads the grid stacks under `.../Grids_64_normalized/tomograms/<id>/` together with the original `reconstruction.mrc` paths under `sample_input_data/tomogram_collection/<id>/`.
+`predict.py` reads grids from `.../tomograms/<id>/` and metadata from `tomogram_collection/<id>/reconstruction.mrc`.
 
 
 
