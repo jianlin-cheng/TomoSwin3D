@@ -75,7 +75,7 @@ Optional Arguments:
     --default-voxel-size", type=float, default=1, help="Fallback voxel size (angstrom) for unknown dataset folder names in step 1.
 
 Example usage: 
-    python prepare_test_data.py --default-voxel-size 10.0
+    python prepare_test_data.py --default-voxel-size 10.00
 ```
 
 
