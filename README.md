@@ -124,7 +124,7 @@ This generated post-processed macromolecule annotation volume and particle centr
 
 ### INPUT OUT Expectation
 
-
+https://github.com/user-attachments/assets/4e7958e7-50d4-4948-89d6-2bf4cbf41377
 
 ## Rights and permissions
 
