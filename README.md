@@ -1,22 +1,27 @@
-# TomoSwin3D
+# TomoSwin3D: A Swin3D Transformer for the Identification and Classification of Macromolecules in 3D Cryo-ET Tomograms.
 
-TomoSwin3D is a 3D Swin U–Net style model for cryo-electron tomography: it predicts macromolecule segmentation or classification on tomogram grids and writes reconstructed prediction volumes (MRC) for downstream centroid extraction and visualization.
+TomoSwin3D leverages a multi-channel input
+representation that augments raw tomogram densities with complementary 3D feature maps capturing edge strength (Sobel
+gradients), local contrast enhancement (morphological top-hat), and multiscale blob responses (Difference-of-Gaussians),
+improving detectability of small and low-contrast targets. To better preserve particle geometry and avoid hand-crafted
+shape assumptions, it adopts occupancy-preserving supervision that directly uses available 3D instance masks rather than
+heuristic Gaussian/spherical labels and applies scalable patch-wise inference followed by lightweight post-processing
+(connected-component analysis, size filtering, centroid extraction) for robust coordinate extraction. Across diverse
+simulated and experimental cryo-ET tomogram benchmarks including SHREC 2020 and 2021 test datasets, EMPIAR
+dataset, and CryoET data portal dataset, TomoSwin3D achieves strong and consistent performance in detecting protein and
+other particles, outperforming existing methods, with a pronounced advantage in picking hard, small protein particles.
+These results establish TomoSwin3D as a scalable and accurate solution for high-throughput cryo-ET macromolecule
+particle picking and downstream subtomogram averaging.
 
 ## Setup
 
-After you clone the repository, create the conda environment, download the pretrained weights and sample inputs, and run prediction.
-
-### Create conda environment
-
-```bash
-conda remove --name TomoSwin3D --all
-conda env create -f environment.yml
-conda activate TomoSwin3D
+#### Clone project
+```
+git clone https://github.com/jianlin-cheng/TomoSwin3D.git
+cd TomoSwin3D/
 ```
 
-For a CPU-only machine, edit `environment.yml` and remove the `pytorch-cuda=12.4` line before `conda env create`, then install the PyTorch build appropriate for your platform.
-
-### Download pretrained models
+### Download trained models
 
 Weights are hosted on Zenodo ([record 19500440](https://zenodo.org/records/19500440)).
 
@@ -28,7 +33,7 @@ rm pretrained_models.zip
 
 Unpack so this repository contains a top-level `pretrained_models/` directory (for example `pretrained_models/TomoSwin3D_model_1.pth`). Several checkpoints are included; see `miscellaneous/which_model_to_use.txt` for which file to use (SHREC multiclass, binary centroid detection, CryoET Portal, unified multiclass, etc.).
 
-### Download sample input data
+### Download sample input test data
 
 ```bash
 curl -L "https://zenodo.org/records/19500440/files/sample_input_data.zip?download=1" -o sample_input_data.zip
@@ -38,7 +43,15 @@ rm sample_input_data.zip
 
 Unpack so you have `sample_input_data/` at the repository root, matching the paths expected by `predict.py` (grid NPZs under `sample_input_data/test_data/...` and reference tomograms under `sample_input_data/tomogram_collection/...`).
 
-## Prediction on sample data
+### Create conda environment
+
+```bash
+conda remove --name TomoSwin3D --all
+conda env create -f environment.yml
+conda activate TomoSwin3D
+```
+
+## Prediction on Test data
 
 `predict.py` runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under a timestamped folder in `output/results/`.
 
