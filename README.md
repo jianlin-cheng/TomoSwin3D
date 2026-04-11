@@ -50,27 +50,27 @@ conda activate TomoSwin3D
 
 ## Prepare test data for inference
 
-`prepare_test_data.py` runs the preprocessing pipeline end-to-end. Default input root is `sample_input_data/tomogram_collection` (one folder per tomogram with `reconstruction.mrc`).
-
 ### Pipeline steps
 
-1. **Tomogram normalization** — Scale intensities for consistent processing.
+1. **Tomogram Normalization** — Normalize raw tomogram intensity values for consistent processing.
 
-2. **Feature maps**
-   - **2a DoG** — Blob-like structures across scales.
-   - **2b Sobel** — Edges and boundaries.
-   - **2c Top-hat** — Local contrast; reduced broad background.
+2. **Feature Map Generation**
+   - **Generate DoG Blob Features** — Highlight blob-like particle structures across multiple scales.
+   - **Generate Sobel Gradient Features** — Extract edge and boundary information.
+   - **Generate Top-hat Features** — Enhance local contrast and remove background trends.
 
-3. **Split density volume** — Tile each normalized tomogram into overlapping 3D grids.
+3. **Tomogram Splitting** — Divide normalized tomograms into smaller 3D sub-volumes (grids).
 
-4. **Split feature volumes** — Tile each feature map to align with the density grids (**4a** Sobel, **4b** top-hat, **4c** DoG).
+4. **Feature-Map Grid Splitting** 
+   - **Split Sobel Feature into Grids** — Split normalized tomograms into smaller 3D sub-volumes (grids).
+   - **Split Top-hat Feature into Grids** — Split Sobel gradient feature maps into grids.
+   - **GeneSplitrate DoG Feature into Grids** — Split DoG blob feature maps into grids.
 
 ```bash
 python prepare_test_data.py
 ```
 
 Optional flags include `--input-path`, `--grid-size` (default 48), `--padding` (default 8), and top-hat options; see `python prepare_test_data.py --help`.
-
 
 
 ## Prediction on Test data
