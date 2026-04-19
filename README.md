@@ -47,7 +47,7 @@ unzip sample_input_data.zip
 rm sample_input_data.zip
 ```
 
-**Note** To run inference on your own data, mirror the same directory layout: each dataset lives in its own directory whose name is the data identifier, and the input tomogram inside that directory must be named `reconstruction.mrc`.
+**Note:** To run inference on your own data, mirror the same directory layout: each dataset lives in its own directory whose name is the data identifier, and the input tomogram inside that directory must be named `reconstruction.mrc`.
 
 ### Create conda environment
 
@@ -84,7 +84,7 @@ Optional Arguments:
     --default-voxel-size", type=float, default=1, help="Fallback voxel size (angstrom) for unknown dataset folder names in step 1."
 
 Example usage: 
-    python prepare_test_data.py --default-voxel-size 10.00
+    python prepare_test_data.py --default-voxel-size 1.00
 ```
 
 
@@ -119,7 +119,7 @@ Optional Arguments:
     --min-blob-size', type=int, default=10, help='Minimum blob size (number of voxels) to keep'
     --connectivity', type=int, choices=[1, 2, 3], default=2, help='Connectivity for connected components: 1=6-conn, 2=18-conn, 3=26-conn (default: 2)'
 Example usage: 
-    python get_coordinates_and_postprocessed_volume.py --min-blob-size 15 --connectivity 2
+    python get_coordinates_and_postprocessed_volume.py --min-blob-size 45 --connectivity 2
 ```
 
 **Note:** The documented CLI defaults are starting points, not guaranteed optima. Empirically tune inference (`--threshold`, checkpoint choice) and post-processing (`--min-blob-size`, `--connectivity`) for your tomograms—e.g. against reference picks or visual inspection—so results match your resolution, noise level, and particle scale.
