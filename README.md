@@ -122,7 +122,7 @@ Example usage:
     python get_coordinates_and_postprocessed_volume.py --min-blob-size 45 --connectivity 2
 ```
 
-**Note:** The documented CLI defaults are starting points, not guaranteed optima. Empirically tune inference (`--threshold`, checkpoint choice) and post-processing (`--min-blob-size`, `--connectivity`) for your tomograms—e.g. against reference picks or visual inspection—so results match your resolution, noise level, and particle scale.
+**Note:** The documented CLI defaults are starting points, not guaranteed optima. Empirically tune inference (`--threshold`, `--model-checkpoint`) and post-processing (`--min-blob-size`, `--connectivity`) for your tomograms e.g. against reference picks or visual inspection; so results match your resolution, noise level, and particle scale.
 
 This generates post-processed macromolecule annotation volume and particle centroid (XYZ) coordinates .
 
