@@ -47,6 +47,18 @@ unzip sample_input_data.zip
 rm sample_input_data.zip
 ```
 
+The organization of the downloaded sample input file should look like:
+
+
+```
+sample_input_data
+└── tomogram_collection
+    └── tomogram_ID_1
+        └── reconstruction.mrc
+```
+
+- **`reconstruction.mrc`** — input tomogram; this exact filename is required for each dataset folder.
+
 **Note:** To run inference on your own data, mirror the same directory layout: each dataset lives in its own directory whose name is the data identifier, and the input tomogram inside that directory must be named `reconstruction.mrc`.
 
 ### Create conda environment
@@ -73,7 +85,7 @@ conda activate TomoSwin3D
 4. **Feature-Map Grid Splitting** 
    - **Split Sobel Feature into Grids** — Split normalized tomograms into smaller 3D sub-volumes (grids).
    - **Split Top-hat Feature into Grids** — Split Sobel gradient feature maps into grids.
-   - **GeneSplitrate DoG Feature into Grids** — Split DoG blob feature maps into grids.
+   - **Split DoG Feature into Grids** — Split DoG blob feature maps into grids.
 
 ```bash
 python prepare_test_data.py
@@ -87,6 +99,33 @@ Example usage:
     python prepare_test_data.py --default-voxel-size 1.00
 ```
 
+After `prepare_test_data.py` finishes, `sample_input_data/` matches this layout (shown for the sample ID `tomogram_ID_1`; additional tomograms add sibling folders with the same names under each parent):
+
+```
+sample_input_data/
+├── tomogram_collection/
+│   └── tomogram_ID_1/
+│       ├── reconstruction.mrc
+│       └── reconstruction_normalized_map.mrc
+└── test_data/
+    └── Grids_64_normalized/
+        ├── tomograms/
+        │   └── tomogram_ID_1/
+        │       └── grid_i*_j*_k*.npz
+        ├── tomograms_feature_maps_DoG_blob/
+        │   └── tomogram_ID_1/
+        │       └── grid_i*_j*_k*.npz
+        ├── tomograms_feature_maps_sobel_gradmag/
+        │   └── tomogram_ID_1/
+        │       └── grid_i*_j*_k*.npz
+        └── tomograms_feature_maps_tophat_combined/
+            └── tomogram_ID_1/
+                └── grid_i*_j*_k*.npz
+```
+
+- **`tomogram_collection/<ID>/`** — raw `reconstruction.mrc` and normalized `reconstruction_normalized_map.mrc`.
+- **`test_data/Grids_64_normalized/tomograms/<ID>/`** — normalized tomogram split into 3D grid tiles (`.npz`).
+- **`tomograms_feature_maps_{sobel_gradmag,tophat_combined,DoG_blob}/<ID>/`** — same grid tiling for Sobel, top-hat, and DoG feature volumes (each tile named `grid_i{...}_j{...}_k{...}.npz`).
 
 ## Prediction on Test data
 
