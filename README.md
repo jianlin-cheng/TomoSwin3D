@@ -106,7 +106,13 @@ sample_input_data/
 ├── tomogram_collection/
 │   └── tomogram_ID_1/
 │       ├── reconstruction.mrc
-│       └── reconstruction_normalized_map.mrc
+│       ├── reconstruction_normalized_map.mrc
+│       └── tomogram_feature_maps/
+│           ├── tomogram_filter_DoG_blob.mrc
+│           ├── tomogram_filter_sobel_gradmag.mrc
+│           └── tomogram_filter_tophat_combined.mrc
+│
+│
 └── test_data/
     └── Grids_64_normalized/
         ├── tomograms/
