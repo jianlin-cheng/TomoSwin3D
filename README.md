@@ -47,6 +47,8 @@ unzip sample_input_data.zip
 rm sample_input_data.zip
 ```
 
+**Note** To run inference on your own data, mirror the same directory layout: each dataset lives in its own directory whose name is the data identifier, and the input tomogram inside that directory must be named `reconstruction.mrc`.
+
 ### Create conda environment
 
 ```bash
@@ -122,7 +124,7 @@ Example usage:
 
 **Note:** The documented CLI defaults are starting points, not guaranteed optima. Empirically tune inference (`--threshold`, checkpoint choice) and post-processing (`--min-blob-size`, `--connectivity`) for your tomograms—e.g. against reference picks or visual inspection—so results match your resolution, noise level, and particle scale.
 
-This generated post-processed macromolecule annotation volume and particle centroid (XYZ) coordinates .
+This generates post-processed macromolecule annotation volume and particle centroid (XYZ) coordinates .
 
 ### Input Output Expectation
 
