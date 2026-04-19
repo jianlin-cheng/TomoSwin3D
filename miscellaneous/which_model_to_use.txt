@@ -2,15 +2,15 @@ There are various TomoSwin3D pretrained models that you can use to best macromol
 
 Pretrained Model1:
 Name:TomoSwin3D_model_1.pth
-When to use: For making predictions on SHREC data. .
+When to use: For making predictions on SHREC 2021 data. .
 CryoETPick_2026-03-23_12:29:33_HiD32_LR0.001_LCE_B64_D0.5_WS2_L2_6_6_2_He3_6_12_24_HeD32_R1_Sadd_SL32_W1_C1.0_Gr64_Ch4_Mclass_mask_Pmulticlass_standardized_across_shrec_2021_GTnon_zero_grid_Nnormalized_A___C15.pth
 Trained only on SHREC 2021 multiclass data
 
 Pretrainied Model 2:
 Name: TomoSwin3D_model_2.pth
-When to Use: If you only need the centroid location of the macromomolecules without needing the classification. This model is trained on 9 tomograms from SHREC 2021, 9 tomograms from SHREC 2020, 24 tomograms from CryoETPortal dataset, and 84 tomograms from the Serpico dataset. All the particles were labelled as 1 and the background was labelled as 0 while preparing training dataset.
+When to Use: If you only need the centroid location of the macromomolecules without needing the classification. This model is trained on tomograms from SHREC 2021, tomograms from SHREC 2020, tomograms from CryoETPortal dataset, and tomograms from the Serpico dataset. All the particles were labelled as 1 and the background was labelled as 0 while preparing training dataset.
 CryoETPick_2026-04-09_02:25:13_HiD32_LR0.001_LCE_B64_D0.5_WS2_L2_6_6_2_He3_6_12_24_HeD32_R1_Sadd_SL32_W1_C1.0_Gr64_Ch4_Mclass_mask_Pbinary_GTnon_zero_grid_Nnormalized_A___C2.pth
-Binary Prediction acroll all dataset
+Binary Prediction across all dataset
 
 
 Pretrained Model 3:
@@ -22,5 +22,6 @@ Fined tuned for multiclass CryoETportal Data
 
 Pretrained Model 4:
 Name: TomoSwin3D_model_4.pth
-CryoETPick_2025-11-06_20:55:14_HiD32_LR0.001_LCE_B64_D0.5_WS2_L2_6_6_2_He3_6_12_24_HeD32_R1_Sadd_SL32_W1_C1.0_Gr64_Ch4_Mclass_mask_Pmulticlass_standardized_across_shrec_2020_21_CryoETPortal_MaxPlanck_GTnon_zero_grid_Nnormalized_A___C130.pth
-When to use: Multiclass Prediction trained on all data . Can classify upto 120 macromolecule types and generate their centroid XYZ coordinates.
+CryoETPick_2026-04-14_12:38:34_HiD32_LR0.001_LCE_B64_D0.5_WS2_L2_6_6_2_He3_6_12_24_HeD32_R1_Sadd_SL32_W1_C1.0_Gr64_Ch4_Mclass_mask_Pmulticlass_standardized_across_shrec_2020_21_CryoETPortal_MaxPlanck_GTnon_zero_grid_Nnormalized_A___C130.pth
+When to use: Multiclass Prediction trained on all data . Can classify upto 129 macromolecule types and generate their centroid XYZ coordinates.
+Full details of the macromolecules and their mapping ids are available in the 'miscellaneous' folder

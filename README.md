@@ -95,30 +95,32 @@ python predict.py
 
 ```
 Optional Arguments:
-    --model_checkpoint", type=str, default="pretrained_models/TomoSwin3D_model_1.pth", help="Path to the trained model checkpoint (.pth file).",
+    --data-ids', nargs='+', default=['tomogram_ID_1'], help='Tomogram or dataset IDs to process (names under test_data/grids and tomogram_collection).'
+    --threshold', type=float, default=0.7, help='Probability/confidence threshold for multiclass masking or binary particle detection.'
+    --model-checkpoint', type=str, default='pretrained_models/TomoSwin3D_model_1.pth', help='Path to the trained model checkpoint (.pth).'
 
-Example usage: 
-     python predict.py --model_checkpoint "pretrained_models/TomoSwin3D_model_2.pth"
+Example usage:
+    python predict.py --data-ids tomogram_ID_1 tomogram_ID_2 --threshold 0.8 --model-checkpoint pretrained_models/TomoSwin3D_model_1.pth
 ```
 
 
-This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under in `output/results/TomoSwin3D_results/`. Provide `data_ids` you would like to run the inference on.
+This runs inference, saves per-grid predictions, reconstructs a 3D volume, and writes an MRC under `output/results/TomoSwin3D_results/`. Pass tomogram IDs with `--data-ids` (see optional arguments above).
 
 ### Post-processing: generate centroids coordinates
 
 
 ```bash
-python get_coordinates_and_postprocessed_volume.py --directory "output/results/TomoSwin3D_results"
+python get_coordinates_and_postprocessed_volume.py
 ```
 ```
 Optional Arguments:
-    --directory', type=str, default='output/results/TomoSwin3D_results', help='Input directory containing predicted MRC files'
-    --min-blob-size', type=int, default=20, help='Minimum blob size (number of voxels) to keep'
+    --min-blob-size', type=int, default=10, help='Minimum blob size (number of voxels) to keep'
     --connectivity', type=int, choices=[1, 2, 3], default=2, help='Connectivity for connected components: 1=6-conn, 2=18-conn, 3=26-conn (default: 2)'
 Example usage: 
-    python get_coordinates_and_postprocessed_volume.py --directory 'output/results/TomoSwin3D_results' --min-blob-size  20
+    python get_coordinates_and_postprocessed_volume.py --min-blob-size 15 --connectivity 2
 ```
 
+**Note:** The documented CLI defaults are starting points, not guaranteed optima. Empirically tune inference (`--threshold`, checkpoint choice) and post-processing (`--min-blob-size`, `--connectivity`) for your tomograms—e.g. against reference picks or visual inspection—so results match your resolution, noise level, and particle scale.
 
 This generated post-processed macromolecule annotation volume and particle centroid (XYZ) coordinates .
 

@@ -549,7 +549,7 @@ Examples:
     input_group.add_argument('-i', '--input', type=str, 
                            help='Input MRC file path')
     input_group.add_argument('-d', '--directory', type=str,
-                           default='output/results/DATETIME_2026-03-24_11:18:36',
+                           default='output/results/TomoSwin3D_results',
                            help='Input directory containing predicted MRC files (default: %(default)s)')
     
     # Processing parameters
