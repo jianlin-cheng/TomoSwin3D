@@ -99,7 +99,7 @@ Example usage:
     python prepare_test_data.py --default-voxel-size 1.00
 ```
 
-After `prepare_test_data.py` finishes, `sample_input_data/` matches this layout (shown for the sample ID `tomogram_ID_1`; additional tomograms add sibling folders with the same names under each parent):
+After `prepare_test_data.py` finishes, `sample_input_data/` matches this layout:
 
 ```
 sample_input_data/
