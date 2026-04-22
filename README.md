@@ -179,4 +179,24 @@ https://github.com/user-attachments/assets/31db858a-8595-4887-90f0-2c1657d66b44
 
 Open Access
 
+This article is licensed under a Creative Commons Attribution 4.0 International License, which permits use, sharing, adaptation, distribution and reproduction in any medium or format, as long as you give appropriate credit to the original author(s) and the source, provide a link to the Creative Commons license, and indicate if changes were made. The images or other third party material in this article are included in the article’s Creative Commons license, unless indicated otherwise in a credit line to the material. If material is not included in the article’s Creative Commons license and your intended use is not permitted by statutory regulation or exceeds the permitted use, you will need to obtain permission directly from the copyright holder. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
+
+
+## Cite this work
+
+If you use the code or data associated with this research work or otherwise find this research useful, please cite:
+
+```bibtex
+@article {Dhakal2026.04.17.719219,
+	author = {Dhakal, Ashwin and Gyawali, Rajan and Cheng, Jianlin},
+	title = {TomoSwin3D: a Swin3D Transformer for the Identification and Classification of Macromolecules in 3D Cryo-ET Tomograms},
+	elocation-id = {2026.04.17.719219},
+	year = {2026},
+	doi = {10.64898/2026.04.17.719219},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/10.64898/2026.04.17.719219v1},
+	eprint = {https://www.biorxiv.org/content/early/2026/04/21/2026.04.17.719219.full.pdf},
+	journal = {bioRxiv}
+}
+```
 
