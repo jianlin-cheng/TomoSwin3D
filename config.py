@@ -1,5 +1,6 @@
 # Configuration file
 ## Author: Ashwin Dhakal [TomoSwin3D]
+#training codebase from Hellbender server and prediction from orchid
 
 import argparse
 import torch
@@ -24,7 +25,7 @@ parser.add_argument("--num_channels", type=int, default=4, help="Number of input
 parser.add_argument("--learning_rate", type=float, default=0.001, help="Learning rate")
 parser.add_argument("--dropout", default=0.5, help="Dropout Rate")
 parser.add_argument("--downscaling_factors", default=(2, 2, 2, 2), help="Downscaling Factors")
-parser.add_argument("--loss_function", type=str, default='CE', help="Loss Function (options: 'Dice', 'GeneralizedDice', 'CE', 'Focal', 'DiceCE')")  #CE: Uses softmax activation BCE: Uses sigmoid activation
+parser.add_argument("--loss_function", type=str, default='BCE', help="Loss Function (options: 'Dice', 'GeneralizedDice', 'CE', 'BCE', 'Focal', 'DiceCE')")  #CE: Uses softmax activation BCE: Uses sigmoid activation
 parser.add_argument("--loss_activation", type=str, default='__', help="Loss Activation Function (options: 'softmax' or 'sigmoid')")
 parser.add_argument("--focal_alpha", type=float, default=0.25, help="Focal Loss alpha parameter (balancing factor)")
 parser.add_argument("--focal_gamma", type=float, default=2.0, help="Focal Loss gamma parameter (focusing parameter, 0-5). Higher=more focus on hard examples")
