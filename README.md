@@ -153,7 +153,7 @@ Optional Arguments:
     --model-checkpoint', type=str, default='pretrained_models/TomoSwin3D_model_1.pth', help='Path to the trained model checkpoint (.pth).'
 
 Example usage:
-    python predict.py --data-ids tomogram_ID_1 tomogram_ID_2 --threshold 0.8 --model-checkpoint pretrained_models/TomoSwin3D_model_1.pth
+    python predict.py --data-ids tomogram_ID_1 tomogram_ID_2 --threshold 0.75 --model-checkpoint pretrained_models/TomoSwin3D_model_2_v2.pth
 ```
 
 
